@@ -1,4 +1,4 @@
-import './styles.css';
+import './styles.scss';
 
 import {fetchImages, page} from './js/apiService';
 import photoCardTpl from '../templates/photo-card.hbs';
@@ -21,7 +21,7 @@ refs.searchInput.addEventListener(
     'input',
     debounce(() => {
         searchImages(true);
-    }, 500)
+    }, 1000)
 );
  
 function searchImages(isReset) { 
