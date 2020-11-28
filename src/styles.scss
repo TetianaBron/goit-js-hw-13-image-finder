@@ -17,7 +17,7 @@ input {
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
-  width: 400px;
+  min-width: 400px;
   border: 2px solid #aaa;
   border-radius: 4px;
   outline: none;
@@ -42,12 +42,13 @@ input:focus {
 
   @media screen and (min-width: $tablet) {
     max-width: $tablet;
-    grid-template-columns: 1fr 1fr;
   }
 
   @media screen and (min-width: $desktopSmall) {
+    grid-template-columns: 1fr 1fr;
     max-width: $desktopSmall;
   }
+
   @media screen and (min-width: $desktopLarge) {
     grid-template-columns: 1fr 1fr 1fr;
     max-width: $desktopLarge;
@@ -57,7 +58,6 @@ input:focus {
 .photo-card {
   box-shadow: 0 0 5px#aaa;
   overflow: hidden;
-  max-width: 565px;
   margin: 15px;
   justify-content: center;
 }
@@ -71,11 +71,7 @@ input:focus {
   display: block;
   width: 100%;
   object-fit: cover;
-  height: 260px;
-
-  @media screen and (min-width: $desktopSmall) {
-    height: 320px;
-  }
+  height: 320px;
 }
 
 .stats {
@@ -86,12 +82,20 @@ input:focus {
 
 .stats-item {
   margin-top: 16px;
-  font-size: 18px;
+  font-size: 12px;
   color: #363536;
   align-items: center;
 
   &:not(:first-child) {
-    padding-left: 40px;
+    padding-left: 20px;
+  }
+
+  @media screen and (min-width: $tablet) {
+    font-size: 16px;
+  }
+
+  @media screen and (min-width: $desktopSmall) {
+    font-size: 18px;
   }
 }
 
