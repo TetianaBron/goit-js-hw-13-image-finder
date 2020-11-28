@@ -21,7 +21,7 @@ refs.searchInput.addEventListener(
     'input',
     debounce(() => {
         searchImages(true);
-    }, 1000)
+    }, 500)
 );
  
 function searchImages(isReset) { 
