@@ -9,12 +9,17 @@ const refs = getRefs();
 const debounce = require('lodash.debounce');
 
 const loadMore = document.createElement('button');
-loadMore.className = 'load-more';
+loadMore.className = 'load-more load-more_hidden';
 loadMore.innerText = 'Load more';
 loadMore.addEventListener('click', () => {
     searchImages();
-    setTimeout(() => window.scrollTo(0, window.innerHeight * page()), 300);
+    // setTimeout(() => window.scrollTo(0, window.innerHeight * page()), 300);
+    setTimeout(() => window.scrollTo({
+        top: window.innerHeight * page(),
+        behavior: 'smooth'
+    }), 300);
 });
+    
 document.body.appendChild(loadMore);
 
 refs.searchInput.addEventListener(
@@ -27,6 +32,7 @@ refs.searchInput.addEventListener(
 function searchImages(isReset) { 
     fetchImages(refs.searchInput.value)
         .then(data => renderImagesList(data.hits, isReset))
+        .then(() => loadMore.classList.remove('load-more_hidden'))
         .catch(error => console.log(error));
 }
 

@@ -5,7 +5,7 @@ const KEY = '19207978-b8cc5d5178f1c84e5ac39b1c7';
 const perPage = 12;
 
 function page() {
-    return numberOfpage + 1 || 0;
+    return numberOfpage + 1;
 }
  
 function fetchImages(searchQuery) { 

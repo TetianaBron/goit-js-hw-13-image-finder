@@ -1,4 +1,6 @@
 body {
+  margin: 0;
+  padding: 0;
   margin-top: 0px;
   background-color: rgb(238, 238, 238);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
@@ -52,7 +54,7 @@ input:focus {
   list-style: none;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr;
   grid-gap: 30px;
   max-width: 480px;
 
@@ -126,4 +128,8 @@ input:focus {
   padding: 10px 20px;
   letter-spacing: 1px;
   cursor: pointer;
+}
+
+.load-more_hidden {
+  display: none;
 }
