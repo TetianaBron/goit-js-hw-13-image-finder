@@ -3,42 +3,55 @@ import './styles.scss';
 import {fetchImages, page} from './js/apiService';
 import photoCardTpl from '../templates/photo-card.hbs';
 
+import '@pnotify/core/dist/BrightTheme.css';
+import '@pnotify/core/dist/PNotify.css';
+import { info } from '@pnotify/core';
+
+
 import getRefs from './js/getRefs';
 const refs = getRefs();
 
 const debounce = require('lodash.debounce');
 
-const loadMore = document.createElement('button');
-loadMore.className = 'load-more load-more_hidden';
-loadMore.innerText = 'Load more';
-loadMore.addEventListener('click', () => {
-    searchImages();
-    // setTimeout(() => window.scrollTo(0, window.innerHeight * page()), 300);
-    setTimeout(() => window.scrollTo({
-        top: window.innerHeight * page(),
-        behavior: 'smooth'
-    }), 300);
-});
-    
-document.body.appendChild(loadMore);
-
 refs.searchInput.addEventListener(
     'input',
     debounce(() => {
         searchImages(true);
-    }, 500)
+    }, 1000)
 );
  
 function searchImages(isReset) { 
     fetchImages(refs.searchInput.value)
-        .then(data => renderImagesList(data.hits, isReset))
-        .then(() => loadMore.classList.remove('load-more_hidden'))
+        .then(data => renderImagesList(data.hits, isReset, data.totalHits))
         .catch(error => console.log(error));
 }
 
-function renderImagesList(images, isReset) {
+function renderImagesList(images, isReset, total) {
     const markup = photoCardTpl(images);
-    if (isReset) refs.gallery.innerHTML = markup;
-    else refs.gallery.innerHTML += markup;
+    if (isReset) {
+        refs.gallery.innerHTML = markup;
+        info({
+            text: `There are ${total} pictures found!`,
+            type: 'info'
+        })
+    }
+    else {
+        refs.gallery.innerHTML += markup;
+        
+    };
 }
+
+const onEntry = entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && refs.searchInput.value !== '') {
+            searchImages();
+        }
+    });
+};
+
+
+const observer = new IntersectionObserver(onEntry, {
+    rootMargin: '500px',
+});
+observer.observe(refs.sentinel);
 
