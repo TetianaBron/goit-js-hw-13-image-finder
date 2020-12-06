@@ -20,13 +20,10 @@ function searchImages(e) {
   }
 
     newsApiService.resetPage();
-console.log(newsApiService.resetPage());
      clearImagesContainer();
-console.log(clearImagesContainer());
     newsApiService.fetchImages().then(images => {
     appendImagesMarkup(images);
     newsApiService.incrementPage();
-console.log(newsApiService.incrementPage());
   });
 }
 
