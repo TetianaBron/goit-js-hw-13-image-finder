@@ -1,7 +1,7 @@
 export default function getRefs() {
     return {
         gallery: document.querySelector('.gallery'),
-        searchInput: document.querySelector('input'),
+        searchForm: document.querySelector('.js-search-form'),
         sentinel: document.querySelector('#sentinel'),
     };
 }

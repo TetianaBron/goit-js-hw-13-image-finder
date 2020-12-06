@@ -1,50 +1,50 @@
 import './styles.scss';
 
-import {fetchImages, page} from './js/apiService';
+import NewsApiService from './js/apiService';
+
 import photoCardTpl from '../templates/photo-card.hbs';
 
-import '@pnotify/core/dist/BrightTheme.css';
-import '@pnotify/core/dist/PNotify.css';
-import { info } from '@pnotify/core';
-
-
 import getRefs from './js/getRefs';
+
 const refs = getRefs();
+const newsApiService = new NewsApiService();
 
-const debounce = require('lodash.debounce');
+refs.searchForm.addEventListener('submit', searchImages);
 
-refs.searchInput.addEventListener(
-    'input',
-    debounce(() => {
-        searchImages(true);
-    }, 1000)
-);
- 
-function searchImages(isReset) { 
-    fetchImages(refs.searchInput.value)
-        .then(data => renderImagesList(data.hits, isReset, data.totalHits))
-        .catch(error => console.log(error));
+function searchImages(e) {
+  e.preventDefault();
+  newsApiService.query = e.currentTarget.elements.query.value;
+
+  if (newsApiService.query === '') {
+    return alert('Enter something');
+  }
+
+    newsApiService.resetPage();
+console.log(newsApiService.resetPage());
+     clearImagesContainer();
+console.log(clearImagesContainer());
+    newsApiService.fetchImages().then(images => {
+    appendImagesMarkup(images);
+    newsApiService.incrementPage();
+console.log(newsApiService.incrementPage());
+  });
 }
 
-function renderImagesList(images, isReset, total) {
-    const markup = photoCardTpl(images);
-    if (isReset) {
-        refs.gallery.innerHTML = markup;
-        info({
-            text: `There are ${total} pictures found!`,
-            type: 'info'
-        })
-    }
-    else {
-        refs.gallery.innerHTML += markup;
-        
-    };
+function appendImagesMarkup(images) {
+  refs.gallery.insertAdjacentHTML('beforeend', photoCardTpl(images));
+}
+
+function clearImagesContainer() {
+  refs.gallery.innerHTML = '';
 }
 
 const onEntry = entries => {
     entries.forEach(entry => {
-        if (entry.isIntersecting && refs.searchInput.value !== '') {
-            searchImages();
+        if (entry.isIntersecting && newsApiService.query !== '') {
+            newsApiService.fetchImages().then(images => {
+                appendImagesMarkup(images);
+                newsApiService.incrementPage();
+            });
         }
     });
 };
