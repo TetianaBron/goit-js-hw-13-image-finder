@@ -11,7 +11,10 @@ const newsApiService = new NewsApiService();
 
 refs.searchForm.addEventListener('submit', searchImages);
 
+let flag = false;
+
 function searchImages(e) {
+  flag = false;
   e.preventDefault();
   newsApiService.query = e.currentTarget.elements.query.value;
 
@@ -23,7 +26,7 @@ function searchImages(e) {
      clearImagesContainer();
     newsApiService.fetchImages().then(images => {
     appendImagesMarkup(images);
-    newsApiService.incrementPage();
+     newsApiService.incrementPage();
   });
 }
 
@@ -37,13 +40,14 @@ function clearImagesContainer() {
 
 const onEntry = entries => {
     entries.forEach(entry => {
-        if (entry.isIntersecting && newsApiService.query !== '') {
+        if (entry.isIntersecting && newsApiService.query && flag) {
             newsApiService.fetchImages().then(images => {
                 appendImagesMarkup(images);
                 newsApiService.incrementPage();
             });
         }
     });
+  flag = true;
 };
 
 
