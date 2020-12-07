@@ -31,31 +31,24 @@ header {
 
 input {
   display: block;
-  // width: 300px;
   border: 2px solid #aaa;
   border-radius: 4px;
   outline: none;
   padding: 8px;
   font-size: 18px;
-
-  @media screen and (min-width: 480px) {
-    //width: 400px;
-  }
 }
-
-// input:focus {
-//   border-color: rgb(98, 96, 99);
-//   box-shadow: 0 0 8px 0 rgb(15, 4, 32);
-// }
 
 .search-form {
   display: flex;
   justify-content: center;
-  //text-align: center;
   padding: 8px;
   margin: auto;
-  width: 400px;
+  width: 200px;
   font-size: 18px;
+
+  @media screen and (min-width: 480px) {
+    width: 400px;
+  }
 }
 
 button {
