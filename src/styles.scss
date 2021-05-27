@@ -1,3 +1,8 @@
+:root {
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-duration: 250ms;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -94,6 +99,8 @@ button:focus {
 .photo-card:hover {
   border-color: rgb(98, 96, 99);
   box-shadow: 0 0 8px 0 rgb(15, 4, 32);
+  transition: transform var(--animation-duration) var(--timing-function);
+  transform: scale(1.05);
 }
 
 .photo-card > img {
